@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Board from "../views/Board.vue";
+import BoardView from "../views/BoardView.vue";
 
 const routes = [
   {
     path: "/board",
-    name: "Board",
-    component: Board,
-  },
+    name: "board",
+    component: BoardView
+  }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  routes
 });
 
 export default router;
