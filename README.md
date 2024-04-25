@@ -1,4 +1,4 @@
-# dictator-web
+# dictator-game-web
 
 ## Project setup
 ```
