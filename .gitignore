@@ -1,23 +1,91 @@
+# System files #
+################
 .DS_Store
-node_modules
-/dist
+.AppleDouble
+.LSOverride
 
+# Icon must end with two \r
+Icon
 
-# local env files
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Node modules and distribution directory
+node_modules/
+/dist/
+
+# Vite
+.vite/
+.vitepress/dist
+
+# Environment files
+.env
 .env.local
 .env.*.local
 
-# Log files
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Operating System generated files
+ehthumbs.db
+Thumbs.db
+
+# Vue.js specific
+.history/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
