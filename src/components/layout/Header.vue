@@ -1,15 +1,12 @@
 <template>
-  <b-navbar class="is-transparent">
-    <template #brand>
-      <b-navbar-item tag="router-link" :to="{ name: 'board' }">
+  <div class="navbar is-transparent">
+      <div tag="navbar-item router-link" :to="{ name: 'board' }">
         Dictator Game
-      </b-navbar-item>
-    </template>
-    <template #start>
-      <b-navbar-item tag="router-link" :to="{ name: 'board' }">About</b-navbar-item>
+      </div>
+
+      <div tag="navbar-item router-link" :to="{ name: 'board' }">About</div>
       <!-- Additional navbar items -->
-    </template>
-  </b-navbar>
+  </div>
 </template>
 
 <script>

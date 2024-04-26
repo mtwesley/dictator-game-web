@@ -1,17 +1,25 @@
 <template>
   <div v-if="$store.state.board.id !== 0" class="board-container" @mousedown="startDrag" @mouseup="stopDrag" @mouseleave="stopDrag" @mousemove="dragBoard">
+  <div class="tiles" :style="{ 'grid-template-columns': `repeat(${Math.floor($store.state.board.width / 100)}, 1fr)` }">
+    <div v-for="tile in $store.state.board.tiles" :key="tile.id" class="tile" @mouseover="showCoordinates(tile.position)">
+      {{ tile.coins > 0 ? `${tile.coins} Coins` : '' }}
+    </div>
+  </div>
+</div>
+
+  <!-- <div v-if="$store.state.board.id !== 0" class="board-container" @mousedown="startDrag" @mouseup="stopDrag" @mouseleave="stopDrag" @mousemove="dragBoard">
     <div class="tiles" :style="tilesStyle">
       <div
         v-for="tile in $store.state.board.tiles"
         :key="tile.id"
         class="tile"
-        :style="{ top: `${tile.position.y * 30}px`, left: `${tile.position.x * 30}px` }"
         @mouseover="showCoordinates(tile.position)"
       >
         {{ tile.coins > 0 ? `${tile.coins} Coins` : '' }}
       </div>
     </div>
-  </div>
+  </div> -->
+
 </template>
 
 <script>
@@ -25,11 +33,11 @@ export default {
       startY: 0,
       dragging: false,
       tilesStyle: {
-        position: 'relative',
+        // position: 'relative',
         cursor: 'grab',
-        width: '100%', 
-        height: '100%',
-        transform: 'translate(0px, 0px)'
+        // width: '100%', 
+        // height: '100%',
+        // transform: 'translate(0px, 0px)'
       }
     };
   },
@@ -76,9 +84,8 @@ export default {
 <style scoped>
 .board-container {
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  position: relative;
+  width: 100vw;
+  height: calc(100vh - 80px);
 }
 
 .tiles {
@@ -87,8 +94,8 @@ export default {
 }
 
 .tile {
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;
