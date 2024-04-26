@@ -1,13 +1,5 @@
 <template>
   <div v-if="$store.state.board.id !== 0" class="board-container" @mousedown="startDrag" @mouseup="stopDrag" @mouseleave="stopDrag" @mousemove="dragBoard">
-  <div class="tiles" :style="{ 'grid-template-columns': `repeat(${Math.floor($store.state.board.width / 100)}, 1fr)` }">
-    <div v-for="tile in $store.state.board.tiles" :key="tile.id" class="tile" @mouseover="showCoordinates(tile.position)">
-      {{ tile.coins > 0 ? `${tile.coins} Coins` : '' }}
-    </div>
-  </div>
-</div>
-
-  <!-- <div v-if="$store.state.board.id !== 0" class="board-container" @mousedown="startDrag" @mouseup="stopDrag" @mouseleave="stopDrag" @mousemove="dragBoard">
     <div class="tiles" :style="tilesStyle">
       <div
         v-for="tile in $store.state.board.tiles"
@@ -18,7 +10,7 @@
         {{ tile.coins > 0 ? `${tile.coins} Coins` : '' }}
       </div>
     </div>
-  </div> -->
+  </div>
 
 </template>
 
@@ -33,17 +25,17 @@ export default {
       startY: 0,
       dragging: false,
       tilesStyle: {
-        // position: 'relative',
         cursor: 'grab',
-        // width: '100%', 
-        // height: '100%',
-        // transform: 'translate(0px, 0px)'
+        position: 'relative',
+        width: '100%', 
+        height: '100%',
+        transform: 'translate(0px, 0px)'
       }
     };
   },
   computed: {
     boardId() {
-      return this.board.id || 0;
+      return this.$store.state.board.id || 0;
     }
   },
   methods: {
@@ -62,23 +54,28 @@ export default {
       this.tilesStyle.transform = `translate(${dx}px, ${dy}px)`;
     },
     showCoordinates(position) {
-      console.log(`Tile at (${position.x}, ${position.y})`);
+      // console.log(`Tile at (${position.x}, ${position.y})`);
     }
   },
   created() {
     BoardService.getDefaultBoard().then(response => {
-      if (response.status == 200) {
+      if (response.status === 200) {
         const board = response.data;
         BoardService.getTilesByBoardId(board.id).then(response => {
-          if (response.status) {
+          if (response.status === 200) {
             const tiles = response.data;
-            this.$store.dispatch("initializeBoard", { board, tiles})
+            this.$store.dispatch("initializeBoard", { board, tiles });
           }
-        })
+        }).catch(error => {
+          console.error('Error fetching tiles:', error);
+        });
       }
+    }).catch(error => {
+      console.error('Error fetching board:', error);
     });
   },
 };
+
 </script>
 
 <style scoped>
@@ -89,13 +86,13 @@ export default {
 }
 
 .tiles {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  grid-auto-rows: 100px;
+  gap: 10px;
 }
 
 .tile {
-  width: 100px;
-  height: 100px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;
