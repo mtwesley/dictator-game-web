@@ -1,10 +1,17 @@
 <template>
-  <div v-if="$store.state.board.id !== 0" @keydown="handleArrowPress" class="board-container" @mousedown="startDrag" @mouseup="stopDrag" @mouseleave="stopDrag" @mousemove="dragBoard">
+  <div v-if="$store.state.board.id !== 0" class="board-container"  
+      @keydown="handleArrowPress"
+      @mousedown="startDrag" 
+      @mouseup="stopDrag" 
+      @mouseleave="stopDrag" 
+      @mousemove="dragBoard">
     <div class="tiles" :style="tilesStyle">
       <div v-for="tile in $store.state.board.tiles" :key="tile.id" class="tile" :class="{ 'bracket': tile.coins > 0 }" @mouseover="showCoordinates(tile.position)">
           <img class="coins" v-if="tile.coins > 0" :src="getCoinImage(tile.coins)" alt="Coins">
           <span v-if="tile.coins > 0" class="badge">{{ tile.coins }}</span>
-          <img v-if="tile.position.x === playerPosition.x && tile.position.y === playerPosition.y" src="/src/assets/images/player.png" alt="Player" class="player">
+          <div class="player" v-if="tile.position.x === playerPosition.x && tile.position.y === playerPosition.y">
+            <img src="/src/assets/images/player.png" alt="Player">
+          </div>
       </div>
     </div>
   </div>
@@ -20,17 +27,21 @@ export default {
     return {
       startX: 0,
       startY: 0,
+      newX: 0,
+      newY: 0,
+      lastX: 0,
+      lastY: 0,
       dragging: false,
       tilesStyle: {
-        cursor: 'grab',
-        position: 'relative',
-        width: '100%', 
-        height: '100%',
-        transform: 'translate(0px, 0px)'
+          cursor: 'grab',
+          position: 'relative',
+          width: '100%', 
+          height: '100%',
+          transform: 'translate(0px, 0px)' // This will be updated dynamically
       },
       playerPosition: {
-        x: 0,
-        y: 0
+          x: 0,
+          y: 0
       },
     };
   },
@@ -58,22 +69,30 @@ export default {
         return '/src/assets/images/three_coins.png';
       }
     },
+    showCoordinates(position) {
+      // console.log(`Tile at (${position.x}, ${position.y})`);
+    },
     startDrag(event) {
       this.dragging = true;
       this.startX = event.clientX;
       this.startY = event.clientY;
     },
-    stopDrag() {
+    stopDrag(event) {
       this.dragging = false;
+      this.lastX = this.newX < 0 ? this.lastX + event.clientX - this.startX : 0;
+      this.lastY = this.newY < 0 ? this.lastY + event.clientY - this.startY : 0;
     },
     dragBoard(event) {
-      if (!this.dragging) return;
+      if (!this.dragging) {
+        return;
+      }
       const dx = event.clientX - this.startX;
       const dy = event.clientY - this.startY;
-      this.tilesStyle.transform = `translate(${dx}px, ${dy}px)`;
-    },
-    showCoordinates(position) {
-      // console.log(`Tile at (${position.x}, ${position.y})`);
+      const newX = this.lastX + dx;
+      const newY = this.lastY + dy;
+      this.newX = newX < 0 ? newX : 0;
+      this.newY = newY < 0 ? newY : 0;
+      this.tilesStyle.transform = `translate(${this.newX}px, ${this.newY}px)`;
     },
     handleArrowPress(event) {
       const direction = event.key;
@@ -138,6 +157,7 @@ export default {
 }
 
 .tile {
+  z-index: 0;
   position: relative;
   display: flex;
   justify-content: center;
@@ -148,13 +168,23 @@ export default {
   background-repeat: no-repeat;
 }
 
-.tile img.coins {}
+.tile, .coins, .badge, .player {
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none;
+}
 
 .tile.bracket {
   background-image: url('/src/assets/images/stone_tile_bracket.png');
 }
 
+.coins {
+  z-index: 5;
+}
+
 .badge {
+  z-index: 10;
   position: absolute;
   top: 25px;
   right: 25px;
@@ -166,6 +196,10 @@ export default {
   font-weight: bold;
   min-width: 20px;
   text-align: center;
+}
+
+.player {
+  z-index: 50;
 }
 
 
