@@ -5,7 +5,8 @@ const emptyBoard = () => ({
   width: 0,
   height: 0,
   tiles: [],
-  players: []
+  players: [],
+  isMenuActive: false,
 });
 
 export default createStore({
@@ -14,6 +15,9 @@ export default createStore({
     tileIndexMap: new Map()
   },
   mutations: {
+    TOGGLE_MENU(state) {
+      state.isMenuActive = !state.isMenuActive;
+    },
     SET_BOARD(state, board) {
       const { id, width, height } = board;
       state.board = { ...emptyBoard(), id, width, height };

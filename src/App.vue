@@ -19,6 +19,13 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+
+.small-view {
+  width: 70%;
+  min-width: 380px;
+  max-width: 640px;
+  margin: 2em auto;
+}
 
 </style>

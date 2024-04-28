@@ -1,6 +1,7 @@
 <template>
-  <div v-if="$store.state.board.id !== 0" class="board-container"  
+  <div v-if="$store.state.board.id !== 0" class="board-container" :style="boardContainerStyle"
       @keydown="handleArrowPress"
+      @resize="handleResize"
       @mousedown="startDrag" 
       @mouseup="stopDrag" 
       @mouseleave="stopDrag" 
@@ -25,6 +26,7 @@ import BoardService from '../api/boardService.js';
 export default {
   data() {
     return {
+      windowX: window.innerWidth,
       startX: 0,
       startY: 0,
       newX: 0,
@@ -56,6 +58,12 @@ export default {
         left: `${this.playerPosition.x * tileSize}px`,
         top: `${this.playerPosition.y * tileSize}px`,
         transition: 'all 3s ease-in-out'
+      };
+    },
+    boardContainerStyle() {
+      const baseHeight = this.$store.state.isMenuActive && this.windowX <= 1024 ? '155px' : '58px';
+      return {
+        height: `calc(100vh - ${baseHeight})`
       };
     }
   },
@@ -93,6 +101,9 @@ export default {
       this.newX = newX < 0 ? newX : 0;
       this.newY = newY < 0 ? newY : 0;
       this.tilesStyle.transform = `translate(${this.newX}px, ${this.newY}px)`;
+    },
+    handleResize() {
+      this.windowX = window.innerWidth;
     },
     handleArrowPress(event) {
       const direction = event.key;
@@ -134,9 +145,11 @@ export default {
   },
   mounted() {
     window.addEventListener('keydown', this.handleArrowPress);
+    window.addEventListener('resize', this.handleResize);
   },
   beforeDestroy() {
     window.removeEventListener('keydown', this.handleArrowPress);
+    window.removeEventListener('resize', this.handleResize);
   }
 };
 
@@ -146,7 +159,7 @@ export default {
 .board-container {
   overflow: hidden;
   width: 100vw;
-  height: calc(100vh - 80px);
+  /* height: calc(100vh - 80px); */
 }
 
 .tiles {
