@@ -1,7 +1,8 @@
-
 # Dictator Game Web Front-End
 
 This repository contains the front-end code for the Dictator Game, a classic experiment in behavioral economics. In this interactive game, players can assume the roles of either dictators or citizens and make decisions about allocating resources among one another.
+
+![Dictator Gameplay](https://github.com/mtwesley/dictator-game-web/raw/main/gameplay.gif)
 
 ## Overview
 
@@ -37,12 +38,14 @@ Follow these steps to get the project up and running on your local machine for d
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/mtwesley/dictator-game-web
    cd dictator-game-web
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -51,6 +54,7 @@ Follow these steps to get the project up and running on your local machine for d
    Use the file named `.env` and adjust the settings to match your local development environment.
 
 4. Serve the application:
+
    ```bash
    npm run serve
    ```
