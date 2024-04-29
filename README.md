@@ -2,7 +2,7 @@
 
 This repository contains the front-end code for the Dictator Game, a classic experiment in behavioral economics. In this interactive game, players can assume the roles of either dictators or citizens and make decisions about allocating resources among one another.
 
-![Dictator Gameplay](https://github.com/mtwesley/dictator-game-web/raw/main/gameplay.gif)
+![Dictator Gameplay](https://github.com/mtwesley/dictator-game-web/raw/master/gameplay.gif)
 
 ## Overview
 
