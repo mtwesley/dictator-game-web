@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div id="login" class="box small-view">
-      <h1 class="title has-text-centered">Welcome back.</h1>
+      <h1 class="title has-text-centered">Welcome back</h1>
       <!-- <h2 class="subtitle has-text-centered">Let's get started!</h2> -->
 
       <form @submit.prevent="handleLogin">

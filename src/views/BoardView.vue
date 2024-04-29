@@ -110,7 +110,7 @@ export default {
       let newX = this.playerPosition.x;
       let newY = this.playerPosition.y;
 
-      console.log(newX, newY);
+      // console.log(newX, newY);
 
       switch(direction) {
         case 'ArrowUp': newY--; break;
@@ -127,6 +127,7 @@ export default {
     }
   },
   created() {
+    // this.$Progress.start();
     BoardService.getDefaultBoard().then(response => {
       if (response.status === 200) {
         const board = response.data;

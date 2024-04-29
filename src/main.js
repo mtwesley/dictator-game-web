@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 
 import "bulma/css/bulma.css";
+import 'nprogress/nprogress.css'; 
 
 const app = createApp(App);
 

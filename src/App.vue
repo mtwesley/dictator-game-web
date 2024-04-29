@@ -28,4 +28,8 @@ export default {
   margin: 2em auto;
 }
 
+#nprogress .bar {
+  height: 4px !important;
+}
+
 </style>
