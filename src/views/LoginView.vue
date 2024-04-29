@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div id="login" class="box small-view">
-      <h1 class="title has-text-centered">Welcome back!</h1>
-      <h2 class="subtitle has-text-centered">Let's get started!</h2>
+      <h1 class="title has-text-centered">Welcome back.</h1>
+      <!-- <h2 class="subtitle has-text-centered">Let's get started!</h2> -->
 
       <form @submit.prevent="handleLogin">
         <div class="field">
@@ -25,7 +25,7 @@
 
         <div class="field">
           <div class="control">
-            <button class="button is-link is-large is-fullwidth">Login</button>
+            <button class="button is-link is-large is-fullwidth" :disabled="!canSubmit">Continue</button>
           </div>
         </div>
       </form>
@@ -50,6 +50,11 @@ export default {
       faUser,
       faLock
     };
+  },
+  computed: {
+    canSubmit() {
+      return this.username && this.password;
+    }
   },
   methods: {
     handleLogin() {

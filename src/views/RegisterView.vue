@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div id="register" class="box small-view">
-      <h1 class="title has-text-centered">Hi, there!</h1>
+      <h1 class="title has-text-centered is-spaced">Hi, there!</h1>
       <h2 class="subtitle has-text-centered">Let's get to know each other</h2>
 
       <form @submit.prevent="handleRegistration">
