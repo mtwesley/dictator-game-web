@@ -1,7 +1,5 @@
 import { createStore } from "vuex";
 
-const authToken = () => localStorage.getItem('token');
-
 const emptyBoard = () => ({
   id: null,
   width: 0,
@@ -66,25 +64,27 @@ export default createStore({
       const { id, name, username } = player;
       state.player = { ...emptyPlayer(), id, name, username };
     },
-    UNSET_BOARD(state) {
-      state.board = emptyPlayer();
+    UNSET_PLAYER(state) {
+      state.player = emptyPlayer();
     },
   },
   actions: {
-    login({ commit }, { token, player }) {
-      commit('SET_TOKEN', token); 
+    initializePlayer({ commit }, player) {
       commit('SET_PLAYER', player);
     },
-    // initializePlayer({ commit }, player) {
-    // },
     initializeBoard({ commit }, { board, tiles, players }) {
       commit("SET_BOARD", board);
       commit("SET_TILES", tiles);
     },
+    login({ commit }, token) {
+      commit('SET_TOKEN', token || localStorage.getItem('token')); 
+      localStorage.setItem('token', token);
+    },
     logout({ commit }) {
       commit('UNSET_TOKEN');
-      // commit('UNSET_PLAYER');
-      // commit('UNSET_BOARD');
+      commit('UNSET_PLAYER');
+      commit('UNSET_BOARD');
+      localStorage.removeItem('token');
     },
   },
   getters: {

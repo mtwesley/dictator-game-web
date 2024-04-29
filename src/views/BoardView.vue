@@ -135,13 +135,9 @@ export default {
             const tiles = response.data;
             this.$store.dispatch("initializeBoard", { board, tiles });
           }
-        }).catch(error => {
-          console.error('Error fetching tiles:', error);
-        });
+        })
       }
-    }).catch(error => {
-      console.error('Error fetching board:', error);
-    });
+    })
   },
   mounted() {
     window.addEventListener('keydown', this.handleArrowPress);

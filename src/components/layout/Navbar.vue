@@ -5,10 +5,10 @@
         <img src="/src/assets/images/logo.png" alt="Dictator Game">
       </router-link>
     
-      <div class="navbar-item">
+      <div class="navbar-item" v-if="!$store.getters.isAuthenticated">
         <div class="buttons">
-          <router-link class="button is-dark" v-bind:to="{ name: 'register'}"><strong>Sign up</strong></router-link>
-          <router-link class="button is-light" v-bind:to="{ name: 'login'}"><strong>Login</strong></router-link>
+          <router-link class="button is-dark" v-bind:to="{ name: 'register'}" exact><strong>Sign up</strong></router-link>
+          <router-link class="button is-light" v-bind:to="{ name: 'login'}" exact><strong>Login</strong></router-link>
         </div>
       </div>
 
@@ -21,7 +21,7 @@
 
     </div>
 
-  <div id="navbarMenu" class="navbar-menu" :class="{ 'is-active': $store.state.isMenuActive }">
+  <div id="navbarMenu" class="navbar-menu" :class="{ 'is-active': $store.state.isMenuActive && $store.getters.isAuthenticated }">
     <div class="navbar-start">
       <router-link class="navbar-item" v-bind:to="{ name: 'board'}">Board</router-link>
       <router-link class="navbar-item" v-bind:to="{ name: 'profile'}">Profile</router-link>

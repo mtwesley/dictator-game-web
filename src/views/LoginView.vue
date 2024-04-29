@@ -53,20 +53,27 @@ export default {
   },
   methods: {
     handleLogin() {
+      // localStorage.removeItem('token');
+
       authService.login(this.username, this.password)
-        .then(response => {
+        .then(response => {          
           if (response.status === 200) {
             const token = response.data.token;
-            localStorage.setItem('token', token);
-            authService.profile().then(response => {
-              console.log("PROFILE", response.data)
-            })
+            this.$store.dispatch('login', token).then(() => {
+
+                authService.profile().then(response => {
+                  const player = response.data;
+                  
+                    this.$store.dispatch('initializePlayer', player ).then(() => {
+                      this.$router.push('/board');
+                    })
+
+                })
+                .catch(() => this.$router.push("/logout"))
+
+            });
+
           }
-          // this.$router.push('/board');
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          this.$store.dispatch('logout');
         })
     }
   }
