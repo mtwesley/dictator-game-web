@@ -7,6 +7,8 @@ This repository contains the front-end code for the Dictator Game, a classic exp
 
 The Dictator Game is designed to study decision-making behavior that tests theories of fairness and altruism. This front-end implementation provides a user-friendly interface for interacting with the game logic, participating in game sessions, and viewing results.
 
+The game will features multiple levels, tiles, and dynamic roles, providing a rich platform for exploring decision-making, strategy, and social dynamics in an economic context.
+
 ## Features (Mostly TODO)
 
 - **Role Selection:** Users can choose to play as a dictator or a citizen.
