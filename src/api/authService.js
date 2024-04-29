@@ -9,11 +9,15 @@ export default {
     return api.post(`/register`, { name, username, password });
   },
 
-  registerCheck() {
-    return api.get("/register/check");
+  registerCheck(username) {
+    return api.get(`/register/check/${username}`);
   },
 
   refresh(token) {
     return api.post(`/refresh`, { token });
+  },
+
+  profile() {
+    return api.get('/profile');
   }
 };

@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <a role="button" class="navbar-burger" aria-label="menu" :class="{ 'is-active': $store.state.isMenuActive }" @click="toggleMenu">
+      <a role="button" class="navbar-burger is-dark" aria-label="menu" :class="{ 'is-active': $store.state.isMenuActive }" @click="toggleMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>

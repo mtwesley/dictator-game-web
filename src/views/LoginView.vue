@@ -1,74 +1,79 @@
 <template>
   <div class="container">
-    <b-field label="Full Name">
-      <b-input placeholder="Enter your full name" v-model="fullName" required />
-    </b-field>
-    <b-field label="Username">
-      <b-input placeholder="Choose a username" v-model="username" required />
-    </b-field>
-    <b-field label="Password" type="is-danger">
-      <b-input type="password" password-reveal placeholder="Create a password" v-model="password" required />
-    </b-field>
-    <b-field label="Confirm Password">
-      <b-input type="password" placeholder="Confirm your password" v-model="passwordConfirmation" required />
-    </b-field>
-    <b-button type="is-primary" @click="register" :loading="isLoading">Register</b-button>
+    <div id="login" class="box small-view">
+      <h1 class="title has-text-centered">Welcome back!</h1>
+      <h2 class="subtitle has-text-centered">Let's get started!</h2>
+
+      <form @submit.prevent="handleLogin">
+        <div class="field">
+          <div class="control has-icons-left">
+            <input class="input is-medium" id="username" type="text" placeholder="Username" v-model="username" required>
+            <span class="icon is-small is-left">
+              <FontAwesomeIcon :icon="faUser" />
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control has-icons-left">
+            <input class="input is-medium" id="password" type="password" placeholder="Password" v-model="password" required>
+            <span class="icon is-small is-left">
+              <FontAwesomeIcon :icon="faLock" />
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button class="button is-link is-large is-fullwidth">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import authService from '../api/authService';
 
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   data() {
     return {
-      fullName: '',
       username: '',
       password: '',
-      passwordConfirmation: '',
-      isLoading: false
+      faUser,
+      faLock
     };
   },
   methods: {
-    register() {
-      if (this.password !== this.passwordConfirmation) {
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: "Passwords do not match!",
-          type: "is-danger"
-        });
-        return;
-      }
-      this.isLoading = true;
-      axios.post('/api/register', {
-        name: this.fullName,
-        username: this.username,
-        password: this.password
-      }).then(response => {
-        this.isLoading = false;
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: "Registration successful!",
-          type: "is-success"
-        });
-        // Handle redirection or clearing form here
-      }).catch(error => {
-        this.isLoading = false;
-        this.$buefy.toast.open({
-          duration: 5000,
-          message: error.response.data,
-          type: "is-danger"
-        });
-      });
+    handleLogin() {
+      authService.login(this.username, this.password)
+        .then(response => {
+          if (response.status === 200) {
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            authService.profile().then(response => {
+              console.log("PROFILE", response.data)
+            })
+          }
+          // this.$router.push('/board');
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+          this.$store.dispatch('logout');
+        })
     }
   }
 };
+
 </script>
 
 <style scoped>
-  .container {
-    max-width: 400px;
-    margin: auto;
-    padding-top: 20px;
-  }
+
 </style>

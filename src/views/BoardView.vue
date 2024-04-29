@@ -159,7 +159,6 @@ export default {
 .board-container {
   overflow: hidden;
   width: 100vw;
-  /* height: calc(100vh - 80px); */
 }
 
 .tiles {
