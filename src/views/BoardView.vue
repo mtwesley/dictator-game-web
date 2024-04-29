@@ -7,8 +7,12 @@
       @mouseleave="stopDrag" 
       @mousemove="dragBoard">
     <div class="tiles" :style="tilesStyle">
-      <div v-for="tile in $store.state.board.tiles" :key="tile.id" class="tile" :class="{ 'bracket': tile.coins > 0 }" @mouseover="showCoordinates(tile.position)">
-          <img class="coins" v-if="tile.coins > 0" :src="getCoinImage(tile.coins)" alt="Coins">
+      <div v-for="tile in $store.state.board.tiles" :key="tile.id" class="tile" :class="{ 'bracket': tile.coins > 0, 'has-coins': tile.coins > 0 }" @mouseover="showCoordinates(tile.position)">
+          <div class="coins" v-if="tile.coins > 0">
+            <img class="coins" v-if="tile.coins <= 40" src="/src/assets/images/one_coins.png" alt="Coins">
+            <img class="coins" v-else-if="tile.coins <=90" src="/src/assets/images/two_coins.png" alt="Coins">
+            <img class="coins" v-else="tile.coins > 150" src="/src/assets/images/three_coins.png" alt="Coins">
+          </div>  
           <span v-if="tile.coins > 0" class="badge">{{ tile.coins }}</span>
           <div class="player" v-if="tile.position.x === playerPosition.x && tile.position.y === playerPosition.y">
             <img src="/src/assets/images/player.png" alt="Player">
@@ -120,7 +124,8 @@ export default {
       }
 
       const newTile = this.$store.state.board.tiles.find(tile => tile.position.x === newX && tile.position.y === newY);
-      if (newTile && !newTile.coins) {
+      // if (newTile && !newTile.coins) {
+      if (newTile) {
         this.playerPosition.x = newX;
         this.playerPosition.y = newY;
       }
@@ -178,6 +183,7 @@ export default {
 }
 
 .tile, .coins, .badge, .player {
+  display: relative;
   -webkit-user-select: none;
   -moz-user-select: none; 
   -ms-user-select: none; 
@@ -190,6 +196,11 @@ export default {
 
 .coins {
   z-index: 5;
+  position: absolute;
+}
+
+.coins img {
+  position: relative;
 }
 
 .badge {
@@ -211,5 +222,11 @@ export default {
   z-index: 50;
 }
 
+.tile.has-coins .player {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+  width: 36px;
+}
 
 </style>
