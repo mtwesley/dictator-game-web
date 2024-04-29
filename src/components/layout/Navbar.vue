@@ -21,7 +21,7 @@
 
     </div>
 
-  <div id="navbarMenu" class="navbar-menu" :class="{ 'is-active': $store.state.isMenuActive && $store.getters.isAuthenticated }">
+  <div v-if="$store.getters.isAuthenticated" id="navbarMenu" class="navbar-menu" :class="{ 'is-active': $store.state.isMenuActive }">
     <div class="navbar-start">
       <router-link class="navbar-item" v-bind:to="{ name: 'board'}">Board</router-link>
       <router-link class="navbar-item" v-bind:to="{ name: 'profile'}">Profile</router-link>

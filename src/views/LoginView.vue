@@ -53,8 +53,6 @@ export default {
   },
   methods: {
     handleLogin() {
-      // localStorage.removeItem('token');
-
       authService.login(this.username, this.password)
         .then(response => {          
           if (response.status === 200) {

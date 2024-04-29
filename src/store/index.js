@@ -1,4 +1,10 @@
 import { createStore } from "vuex";
+import VuexPersist from 'vuex-persist';
+
+const storage = new VuexPersist({
+  storage: window.localStorage,
+  // reducer: ({ player, board, tileIndexMap }) => ({   player, board, tileIndexMap }),
+})
 
 const emptyBoard = () => ({
   id: null,
@@ -17,7 +23,7 @@ const emptyPlayer = () => ({
 
 export default createStore({
   state: {
-    token: localStorage.getItem('userToken') || '',
+    token: '',
     player: emptyPlayer(),
     board: emptyBoard(),
     tileIndexMap: new Map()
@@ -77,7 +83,7 @@ export default createStore({
       commit("SET_TILES", tiles);
     },
     login({ commit }, token) {
-      commit('SET_TOKEN', token || localStorage.getItem('token')); 
+      commit('SET_TOKEN', token);
       localStorage.setItem('token', token);
     },
     logout({ commit }) {
@@ -89,5 +95,6 @@ export default createStore({
   },
   getters: {
     isAuthenticated: state => !!state.token,
-  }
+  },
+  plugins: [storage.plugin]
 });
